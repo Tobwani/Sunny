@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <title>Ein kleines Weihnachtsgeschenk</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+    }
+
+
+    body {
+      background-color: #001f3f;
+      /* Dunkles Blau für besseren Kontrast */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .container {
+      background-color: transparent;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #FF69B4;
+      /* Helle Schriftfarbe für Kontrast */
+      margin: 1rem 0;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #FF69B4;
+      color: white;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #FF1493;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    /* Schnee-Animation */
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      font-size: 1rem;
+      animation: fall 10s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .snow-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <audio id="audioPlayer" loop>
+    <source src="Wham! - Last Christmas (Official Video).mp3" type="audio/mpeg">
+    Dein Browser unterstützt diese Audio-Datei nicht.
+  </audio>
+
+
+  <div class="snow-container"></div>
+
+  <div class="container">
+    <h1 style="color: #FF69B4;">Für meine kleine Prinzessin ❤️</h1>
+    <p>Das ist für dich damit du weißt wie sehr ich dich liebe und an dich denke</p>
+    <button onclick="document.getElementById('audioPlayer').play()">🎵 Für ein bisschen Weihnachtsstimmung</button>
+
+    <div class="video-container">
+      <video autoplay muted loop playsinline style="animation: slowMotion 5s linear infinite;">
+        <source src="WhatsApp Video 2024-12-22 um 20.53.14_74d4b715.mp4" type="video/mp4">
+        Dein Browser unterstützt dieses Video nicht.
+      </video>
+    </div>
+
+    <p>Ich hoffe mein kleines Weihnachtsgeschenk bringt dich zum Lächeln ich hab dich liebbb</p>
+
+    <footer style="color: #FF69B4;">Für dich mit ganz viel Liebe dein Tobiii</footer>
+  </div>
+
+  <script>
+    // Optional: Langsamere Wiedergabe des Videos
+    const video = document.querySelector('video');
+    video.playbackRate = 0.3; // Video läuft mit halber Geschwindigkeit
+
+    // Dynamisches Erstellen von Schneeflocken
+    const snowContainer = document.querySelector('.snow-container');
+    const snowflakeCount = 25; // Variable für die Anzahl der Schneeflocken
+
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.className = 'snowflake';
+      snowflake.textContent = Math.random() > 0.5 ? '❄' : '❅';
+      snowflake.style.left = Math.random() * 100 + '%';
+      snowflake.style.animationDuration = Math.random() * 3 + 8 + 's';
+      snowflake.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+      snowContainer.appendChild(snowflake);
+
+      // Entfernen der Schneeflocke nach dem Animation-Ende
+      snowflake.addEventListener('animationend', () => {
+        snowflake.remove();
+      });
+    }
+
+    // Schneeflocken kontinuierlich erstellen
+    setInterval(createSnowflake, 200); // Alle 100ms eine neue Schneeflocke
+  </script>
+</body>
+
+</html>

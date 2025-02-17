@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Für dich</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+      color: #333;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    #countdown {
+      font-size: 1.5rem;
+      margin: 20px 0;
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+
+    #known-time {
+      font-size: 1rem;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 10px;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      #countdown {
+        font-size: 1.2rem;
+      }
+
+      #known-time {
+        font-size: 0.9rem;
+      }
+
+      footer {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+  <script>
+    // Berechnet die Zeitdifferenz zwischen startDate und endDate in vollen Monaten und verbleibenden Tagen.
+    function calculateKnownTime(startDate, endDate) {
+      let months = 0;
+      let testDate = new Date(startDate);
+
+      // Erhöhe solange die Monatsanzahl, bis das Datum überschritten wird
+      while (testDate <= endDate) {
+        months++;
+        testDate.setMonth(testDate.getMonth() + 1);
+      }
+      months--; // letztes Inkrement zurücknehmen, da testDate jetzt zu groß ist
+
+      // Berechne das Datum, das genau 'months' Monate nach startDate liegt
+      let lastAnniversary = new Date(startDate);
+      lastAnniversary.setMonth(lastAnniversary.getMonth() + months);
+
+      // Berechne die verbleibenden Tage zwischen lastAnniversary und endDate
+      const oneDay = 1000 * 60 * 60 * 24;
+      let days = Math.floor((endDate - lastAnniversary) / oneDay);
+
+      return { months, days };
+    }
+
+    function updateCountdown() {
+      const birthday = new Date("2025-06-12T00:00:00");
+      const firstMet = new Date("2024-08-28T00:00:00");
+      const now = new Date();
+      const diff = birthday - now;
+
+      const countdown = document.getElementById("countdown");
+      const knownTime = document.getElementById("known-time");
+
+      if (diff <= 0) {
+        countdown.innerText = "Es ist ihr Geburtstag! 🎉";
+      } else {
+        const daysLeft = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        countdown.innerText = `${daysLeft} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+      }
+
+      const { months, days } = calculateKnownTime(firstMet, now);
+      knownTime.innerText = `Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.`;
+    }
+
+    setInterval(updateCountdown, 1000);
+  </script>
+</head>
+
+<body>
+  <h1>Noch ...</h1>
+  <div id="countdown">Lade Countdown...</div>
+  <div id="known-time">Lade Zeit...</div>
+  <footer>
+    Erstellt mit Liebe von deinem Tobi 🌟
+  </footer>
+</body>
+
+</html>
