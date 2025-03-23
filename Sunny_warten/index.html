@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Für dich</title>
   <style>
+    /* Pink-Ästhetik */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -15,7 +16,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+      background: linear-gradient(to bottom, #ffecf2, #ffc9e7);
       color: #333;
       text-align: center;
     }
@@ -23,6 +24,7 @@
     h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
+      color: #FF1493;
     }
 
     #countdown {
@@ -64,6 +66,7 @@
       }
     }
   </style>
+
   <script>
     // Berechnet die Zeitdifferenz zwischen startDate und endDate in vollen Monaten und verbleibenden Tagen.
     function calculateKnownTime(startDate, endDate) {
@@ -75,7 +78,8 @@
         months++;
         testDate.setMonth(testDate.getMonth() + 1);
       }
-      months--; // letztes Inkrement zurücknehmen, da testDate jetzt zu groß ist
+      // letztes Inkrement zurücknehmen, da testDate jetzt zu groß ist
+      months--;
 
       // Berechne das Datum, das genau 'months' Monate nach startDate liegt
       let lastAnniversary = new Date(startDate);
@@ -89,28 +93,46 @@
     }
 
     function updateCountdown() {
+      // Hier passen Sie eure wichtigen Daten an:
       const birthday = new Date("2025-06-12T00:00:00");
       const firstMet = new Date("2024-08-28T00:00:00");
       const now = new Date();
+
+      // Countdown bis zum Geburtstag
       const diff = birthday - now;
-
       const countdown = document.getElementById("countdown");
-      const knownTime = document.getElementById("known-time");
-
       if (diff <= 0) {
         countdown.innerText = "Es ist ihr Geburtstag! 🎉";
       } else {
         const daysLeft = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        countdown.innerText = `${daysLeft} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+        const hoursLeft = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdown.innerText = `
+Noch ${daysLeft} Tage, ${hoursLeft} Stunden,
+${minutesLeft} Minuten, ${secondsLeft} Sekunden bis zu deinem Geburtstag
+        `;
       }
 
+      // Zeit, die ihr euch schon kennt
+      const knownTime = document.getElementById("known-time");
       const { months, days } = calculateKnownTime(firstMet, now);
-      knownTime.innerText = `Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.`;
+
+      // Gesamt-Minuten und -Sekunden berechnen
+      const totalDiff = now - firstMet; // in Millisekunden
+      const totalMinutes = Math.floor(totalDiff / (1000 * 60));
+      const totalSeconds = Math.floor(totalDiff / 1000);
+
+      // Formatierung mit Tausenderpunkten (deutsche Formatierung)
+      knownTime.innerText = `
+Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.
+Das sind insgesamt ${totalMinutes.toLocaleString('de-DE')} Minuten
+und ${totalSeconds.toLocaleString('de-DE')} Sekunden.
+      `;
     }
 
+    // Aktualisiere die Werte jede Sekunde
     setInterval(updateCountdown, 1000);
   </script>
 </head>
