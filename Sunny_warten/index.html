@@ -4,18 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Für dich</title>
+  <title>Countdowns</title>
   <style>
-    /* Pink-Ästhetik */
+    /* Pink-Ästhetik und Mobile-Optimierung */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       background: linear-gradient(to bottom, #ffecf2, #ffc9e7);
       color: #333;
       text-align: center;
@@ -23,28 +21,47 @@
 
     h1 {
       font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #FF1493;
+    }
+
+    .countdown-box {
+      background: #fff;
+      padding: 15px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .event-title {
+      font-size: 1.5rem;
       margin-bottom: 10px;
       color: #FF1493;
     }
 
-    #countdown {
-      font-size: 1.5rem;
-      margin: 20px 0;
+    .time {
+      font-size: 1.2rem;
       font-weight: bold;
-      word-wrap: break-word;
     }
 
     #known-time {
+      margin-top: 20px;
       font-size: 1rem;
-      margin-top: 10px;
       color: #555;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      white-space: pre-line;
     }
 
     footer {
-      position: fixed;
-      bottom: 10px;
+      margin-top: 30px;
       font-size: 0.8rem;
-      text-align: center;
       color: #555;
     }
 
@@ -53,93 +70,94 @@
         font-size: 2rem;
       }
 
-      #countdown {
-        font-size: 1.2rem;
+      .event-title {
+        font-size: 1.3rem;
+      }
+
+      .time {
+        font-size: 1rem;
       }
 
       #known-time {
         font-size: 0.9rem;
       }
-
-      footer {
-        font-size: 0.7rem;
-      }
     }
   </style>
-
   <script>
     // Berechnet die Zeitdifferenz zwischen startDate und endDate in vollen Monaten und verbleibenden Tagen.
     function calculateKnownTime(startDate, endDate) {
       let months = 0;
       let testDate = new Date(startDate);
-
-      // Erhöhe solange die Monatsanzahl, bis das Datum überschritten wird
       while (testDate <= endDate) {
         months++;
         testDate.setMonth(testDate.getMonth() + 1);
       }
-      // letztes Inkrement zurücknehmen, da testDate jetzt zu groß ist
       months--;
-
-      // Berechne das Datum, das genau 'months' Monate nach startDate liegt
       let lastAnniversary = new Date(startDate);
       lastAnniversary.setMonth(lastAnniversary.getMonth() + months);
-
-      // Berechne die verbleibenden Tage zwischen lastAnniversary und endDate
       const oneDay = 1000 * 60 * 60 * 24;
       let days = Math.floor((endDate - lastAnniversary) / oneDay);
-
       return { months, days };
     }
 
-    function updateCountdown() {
-      // Hier passen Sie eure wichtigen Daten an:
-      const birthday = new Date("2025-06-12T00:00:00");
-      const firstMet = new Date("2024-08-28T00:00:00");
+    function updateCountdowns() {
+      // Das aktuelle Datum (lokal)
       const now = new Date();
+      // Ereignis-Daten als ISO-Strings mit Offset +01:00 (Berlin, GMT+1)
+      const meetingDate = new Date("2025-07-24T00:00:00+01:00");
+      const herBirthday = new Date("2025-06-12T00:00:00+01:00");
+      const myBirthday = new Date("2025-10-13T00:00:00+01:00");
 
-      // Countdown bis zum Geburtstag
-      const diff = birthday - now;
-      const countdown = document.getElementById("countdown");
-      if (diff <= 0) {
-        countdown.innerText = "Es ist ihr Geburtstag! 🎉";
-      } else {
-        const daysLeft = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hoursLeft = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
-
-        countdown.innerText = `
-Noch ${daysLeft} Tage, ${hoursLeft} Stunden,
-${minutesLeft} Minuten, ${secondsLeft} Sekunden bis zu deinem Geburtstag
-        `;
+      // Countdown-Funktion
+      function getCountdownText(eventDate) {
+        const diff = eventDate - now;
+        if (diff <= 0) {
+          return "Das Ereignis hat bereits stattgefunden!";
+        } else {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          return `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+        }
       }
 
-      // Zeit, die ihr euch schon kennt
-      const knownTime = document.getElementById("known-time");
-      const { months, days } = calculateKnownTime(firstMet, now);
+      // Aktualisiere die Countdowns
+      document.getElementById("meeting-countdown").innerText = getCountdownText(meetingDate);
+      document.getElementById("her-birthday-countdown").innerText = getCountdownText(herBirthday);
+      document.getElementById("my-birthday-countdown").innerText = getCountdownText(myBirthday);
 
-      // Gesamt-Minuten und -Sekunden berechnen
-      const totalDiff = now - firstMet; // in Millisekunden
+      // Berechnung, wie lange wir uns schon kennen (Startdatum als ISO-String mit Offset +01:00)
+      const firstMet = new Date("2024-08-28T00:00:00+01:00");
+      const { months, days } = calculateKnownTime(firstMet, now);
+      const totalDiff = now - firstMet;
       const totalMinutes = Math.floor(totalDiff / (1000 * 60));
       const totalSeconds = Math.floor(totalDiff / 1000);
-
-      // Formatierung mit Tausenderpunkten (deutsche Formatierung)
-      knownTime.innerText = `
-Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.
-Das sind insgesamt ${totalMinutes.toLocaleString('de-DE')} Minuten
-und ${totalSeconds.toLocaleString('de-DE')} Sekunden.
-      `;
+      document.getElementById("known-time").innerText =
+        `Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.\n` +
+        `Das sind insgesamt ${totalMinutes.toLocaleString('de-DE')} Minuten und ${totalSeconds.toLocaleString('de-DE')} Sekunden.`;
     }
 
-    // Aktualisiere die Werte jede Sekunde
-    setInterval(updateCountdown, 1000);
+    // Aktualisiere die Countdowns jede Sekunde
+    setInterval(updateCountdowns, 1000);
+    window.onload = updateCountdowns;
   </script>
 </head>
 
 <body>
-  <h1>Noch ...</h1>
-  <div id="countdown">Lade Countdown...</div>
+  <h1>Countdowns</h1>
+  <div class="countdown-box">
+    <div class="event-title">Treffen (24.07.2025)</div>
+    <div id="meeting-countdown" class="time">Lade Countdown...</div>
+  </div>
+  <div class="countdown-box">
+    <div class="event-title">Ihr Geburtstag (12.06.2025)</div>
+    <div id="her-birthday-countdown" class="time">Lade Countdown...</div>
+  </div>
+  <div class="countdown-box">
+    <div class="event-title">Mein Geburtstag (13.10.2025)</div>
+    <div id="my-birthday-countdown" class="time">Lade Countdown...</div>
+  </div>
   <div id="known-time">Lade Zeit...</div>
   <footer>
     Erstellt mit Liebe von deinem Tobi 🌟
