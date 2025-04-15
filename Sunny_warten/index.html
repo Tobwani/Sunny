@@ -145,14 +145,11 @@
     }
 
     function updateCountdowns() {
-      // Das aktuelle Datum (lokal)
       const now = new Date();
-      // Ereignis-Daten als ISO-Strings mit Offset +01:00 (Berlin, GMT+1)
       const meetingDate = new Date("2025-07-24T00:00:00+01:00");
       const herBirthday = new Date("2025-06-12T00:00:00+01:00");
       const myBirthday = new Date("2025-10-13T00:00:00+01:00");
 
-      // Countdown-Funktion
       function getCountdownText(eventDate) {
         const diff = eventDate - now;
         if (diff <= 0) {
@@ -166,12 +163,10 @@
         }
       }
 
-      // Aktualisiere die Countdowns
       document.getElementById("meeting-countdown").innerText = getCountdownText(meetingDate);
       document.getElementById("her-birthday-countdown").innerText = getCountdownText(herBirthday);
       document.getElementById("my-birthday-countdown").innerText = getCountdownText(myBirthday);
 
-      // Berechnung, wie lange wir uns schon kennen (Startdatum als ISO-String mit Offset +01:00)
       const firstMet = new Date("2024-08-28T00:00:00+01:00");
       const { months, days } = calculateKnownTime(firstMet, now);
       const totalDiff = now - firstMet;
@@ -181,18 +176,14 @@
         `Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.\n` +
         `Das sind insgesamt ${totalMinutes.toLocaleString('de-DE')} Minuten und ${totalSeconds.toLocaleString('de-DE')} Sekunden.`;
 
-      // Berechne den Fortschritt seit dem Festlegen des Treffens:
-      // Das Treffen steht seit 16 Tagen fest, bei insgesamt 119 Tagen (16 + 103).
-      // Falls die Berechnung negativ ist, verwenden wir dennoch 16 Tage als Basis.
-      const meetingFixedDate = new Date("2025-07-08T00:00:00+01:00");
+      // Berechne den Fortschritt:
+      // Es werden die Tage gezählt, die seit dem 27.03.2025 vergangen sind.
+      // Diese Zahl teilen wir durch 119 und multiplizieren mit 100, um den Prozentwert zu erhalten.
+      const fixedDate = new Date("2025-03-27T00:00:00+01:00");
       const totalDays = 119;
-      let daysPassed = Math.floor((now - meetingFixedDate) / (1000 * 60 * 60 * 24));
-      if (daysPassed < 0) {
-        daysPassed = 16;
-      }
+      let daysPassed = Math.floor((now - fixedDate) / (1000 * 60 * 60 * 24));
+      if (daysPassed < 0) daysPassed = 0;
       const progressPercent = Math.min(Math.round((daysPassed / totalDays) * 100), 100);
-      document.getElementById("progress-bar").style.width = progressPercent + "%";
-      document.getElementById("progress-bar").innerText = progressPercent + "%";
 
       const progressBar = document.getElementById("progress-bar");
       progressBar.style.width = progressPercent + "%";
@@ -202,7 +193,6 @@
       progressBar.setAttribute("aria-valuemax", 100);
     }
 
-    // Aktualisiere die Countdowns jede Sekunde
     setInterval(updateCountdowns, 1000);
     window.onload = updateCountdowns;
   </script>
@@ -214,7 +204,7 @@
     <div class="event-title">Erstes Treffen (24.07.2025)</div>
     <div id="meeting-countdown" class="time">Lade Countdown...</div>
     <!-- Fortschrittsbalken in Pink unter der ersten Card -->
-    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="13" aria-valuemin="0"
+    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="0" aria-valuemin="0"
       aria-valuemax="100">
       <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
