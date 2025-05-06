@@ -49,10 +49,22 @@
     }
 
     .small-time {
-      font-size: 0.5rem;
+      font-size: 0.8rem;
       color: rgba(51, 51, 51, 0.7);
-      /* Halbtransparentes Grau */
       margin-top: 5px;
+    }
+
+    #known-time {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #555;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      white-space: pre-line;
     }
 
     footer {
@@ -62,6 +74,22 @@
     }
   </style>
   <script>
+    // Berechnet die Zeitdifferenz zwischen startDate und endDate in vollen Monaten und verbleibenden Tagen.
+    function calculateKnownTime(startDate, endDate) {
+      let months = 0;
+      let testDate = new Date(startDate);
+      while (testDate <= endDate) {
+        months++;
+        testDate.setMonth(testDate.getMonth() + 1);
+      }
+      months--;
+      let lastAnniversary = new Date(startDate);
+      lastAnniversary.setMonth(lastAnniversary.getMonth() + months);
+      const oneDay = 1000 * 60 * 60 * 24;
+      let days = Math.floor((endDate - lastAnniversary) / oneDay);
+      return { months, days };
+    }
+
     function updateCountdowns() {
       const now = new Date();
       const events = [
@@ -78,10 +106,9 @@
           const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
           const weeks = Math.floor(totalDays / 7);
           const days = totalDays % 7;
-          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          return { weeks, days, hours, minutes, seconds };
+          const weeksText = weeks === 1 ? "1 Woche" : `${weeks} Wochen`;
+          const daysText = days === 1 ? "1 Tag" : `${days} Tage`;
+          return { weeksText, daysText };
         }
       }
 
@@ -91,11 +118,19 @@
           document.getElementById(`${event.id}-countdown`).innerText = countdown;
           document.getElementById(`${event.id}-small-time`).innerText = "";
         } else {
-          document.getElementById(`${event.id}-countdown`).innerText = `Noch ${countdown.weeks} Wochen und ${countdown.days} Tage!`;
-          document.getElementById(`${event.id}-small-time`).innerText =
-            `${countdown.hours} Stunden, ${countdown.minutes} Minuten, ${countdown.seconds} Sekunden`;
+          document.getElementById(`${event.id}-countdown`).innerText = `Noch ${countdown.weeksText} und ${countdown.daysText}`;
         }
       });
+
+      // Berechne die Zeit, die ihr euch kennt:
+      const firstMet = new Date("2024-08-28T00:00:00+01:00");
+      const { months, days } = calculateKnownTime(firstMet, now);
+      const totalDiff = now - firstMet;
+      const totalMinutes = Math.floor(totalDiff / (1000 * 60));
+      const totalSeconds = Math.floor(totalDiff / 1000);
+      document.getElementById("known-time").innerText =
+        `Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.\n` +
+        `Das sind insgesamt ${totalMinutes.toLocaleString('de-DE')} Minuten und ${totalSeconds.toLocaleString('de-DE')} Sekunden.`;
     }
 
     setInterval(updateCountdowns, 1000);
@@ -108,18 +143,19 @@
   <div class="countdown-box">
     <div class="event-title">Erstes Treffen (24.07.2025)</div>
     <div id="meeting-countdown" class="time">Lade Countdown...</div>
-    <div id="meeting-small-time" class="small-time">Lade Details...</div>
+    <div id="meeting-small-time" class="small-time"></div>
   </div>
   <div class="countdown-box">
     <div class="event-title">Dein Geburtstag (12.06.2025)</div>
     <div id="her-birthday-countdown" class="time">Lade Countdown...</div>
-    <div id="her-birthday-small-time" class="small-time">Lade Details...</div>
+    <div id="her-birthday-small-time" class="small-time"></div>
   </div>
   <div class="countdown-box">
     <div class="event-title">Mein Geburtstag (13.10.2025)</div>
     <div id="my-birthday-countdown" class="time">Lade Countdown...</div>
-    <div id="my-birthday-small-time" class="small-time">Lade Details...</div>
+    <div id="my-birthday-small-time" class="small-time"></div>
   </div>
+  <div id="known-time">Lade Zeit...</div>
   <footer>
     Erstellt mit Liebe von deinem Tobi 🌟
   </footer>
