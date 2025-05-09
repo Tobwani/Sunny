@@ -3,76 +3,198 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Countdowns</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Für Sunny - Hauptseite</title>
+  <!-- Bootstrap CSS (via CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Pink-Ästhetik und Mobile-Optimierung */
+    /* Hintergrundbild als Pseudo-Element für Unschärfe */
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: linear-gradient(to bottom, #ffecf2, #ffc9e7);
-      color: #333;
-      text-align: center;
+      position: relative;
+      z-index: 0;
+      overflow-x: hidden;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #FF1493;
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('../Sommer.png');
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    /* Container für den Inhalt mit Transparenz */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .navbar {
+      background-color: rgba(255, 105, 180, 0.9) !important;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: #fff !important;
+    }
+
+    .nav-link:hover {
+      color: #FFE6F2 !important;
+    }
+
+    .btn-custom {
+      background-color: #FF69B4;
+      border: none;
+      color: #fff;
+    }
+
+    .btn-custom:hover {
+      background-color: #FF1493;
+    }
+
+    .hero {
+      padding: 4rem 1rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    footer {
+      background-color: rgba(255, 255, 255, 0.85);
     }
 
     .countdown-box {
-      background: #fff;
-      padding: 15px 20px;
-      margin: 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 400px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid #FFB6C1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .countdown-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
     .event-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 1.25rem;
       color: #FF1493;
+      margin-bottom: 0.5rem;
     }
 
     .time {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: #333;
     }
 
     .small-time {
-      font-size: 0.8rem;
-      color: rgba(51, 51, 51, 0.7);
-      margin-top: 5px;
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 0.3rem;
     }
 
-    #known-time {
-      margin-top: 20px;
-      font-size: 1rem;
-      color: #555;
-      background: #fff;
-      padding: 15px 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 400px;
-      white-space: pre-line;
-    }
 
-    footer {
-      margin-top: 30px;
-      font-size: 0.8rem;
-      color: #555;
+    /* Mobile-Optimierungen */
+    @media (max-width: 576px) {
+      .content {
+        padding: 1rem;
+        border-radius: 10px;
+        max-width: 100%;
+      }
+
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
     }
   </style>
+</head>
+
+<body>
+  <div class="content-wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container px-3">
+        <a class="navbar-brand" href="../index.html">Für Sunny</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Navigation umschalten">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../Sunny/index.html">Warum ich dich liebe</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../Sunny_Treffenfest/index.html">Vorfreude</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html">Countdown</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hauptinhalt / Hero Section -->
+    <section class="hero">
+      <div class="content text-center">
+        <h1 class="mb-4">Countdowns</h1>
+        <div class="countdown-box">
+          <div class="event-title">Erstes Treffen (24.07.2025)</div>
+          <div id="meeting-countdown" class="time">Lade Countdown...</div>
+          <div id="meeting-small-time" class="small-time"></div>
+        </div>
+        <div class="countdown-box">
+          <div class="event-title">Dein Geburtstag (12.06.2025)</div>
+          <div id="her-birthday-countdown" class="time">Lade Countdown...</div>
+          <div id="her-birthday-small-time" class="small-time"></div>
+        </div>
+        <div class="countdown-box">
+          <div class="event-title">Mein Geburtstag (13.10.2025)</div>
+          <div id="my-birthday-countdown" class="time">Lade Countdown...</div>
+          <div id="my-birthday-small-time" class="small-time"></div>
+        </div>
+        <div id="known-time">Lade Zeit...</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+      <div class="container text-center px-3">
+        <p class="mb-0">Mit ganz viel Liebe, dein Schwimmer</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS (via CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // Berechnet die Zeitdifferenz zwischen startDate und endDate in vollen Monaten und verbleibenden Tagen.
     function calculateKnownTime(startDate, endDate) {
@@ -136,29 +258,6 @@
     setInterval(updateCountdowns, 1000);
     window.onload = updateCountdowns;
   </script>
-</head>
-
-<body>
-  <h1>Countdowns</h1>
-  <div class="countdown-box">
-    <div class="event-title">Erstes Treffen (24.07.2025)</div>
-    <div id="meeting-countdown" class="time">Lade Countdown...</div>
-    <div id="meeting-small-time" class="small-time"></div>
-  </div>
-  <div class="countdown-box">
-    <div class="event-title">Dein Geburtstag (12.06.2025)</div>
-    <div id="her-birthday-countdown" class="time">Lade Countdown...</div>
-    <div id="her-birthday-small-time" class="small-time"></div>
-  </div>
-  <div class="countdown-box">
-    <div class="event-title">Mein Geburtstag (13.10.2025)</div>
-    <div id="my-birthday-countdown" class="time">Lade Countdown...</div>
-    <div id="my-birthday-small-time" class="small-time"></div>
-  </div>
-  <div id="known-time">Lade Zeit...</div>
-  <footer>
-    Erstellt mit Liebe von deinem Tobi 🌟
-  </footer>
 </body>
 
 </html>
