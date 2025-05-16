@@ -5,10 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Für Sunny - Hauptseite</title>
-  <!-- Bootstrap CSS (via CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Hintergrundbild als Pseudo-Element für Unschärfe */
     body {
       margin: 0;
       position: relative;
@@ -30,7 +28,6 @@
       z-index: -1;
     }
 
-    /* Container für den Inhalt mit Transparenz */
     .content-wrapper {
       position: relative;
       z-index: 1;
@@ -43,7 +40,7 @@
       background-color: rgba(255, 255, 255, 0.85);
       padding: 2rem;
       border-radius: 15px;
-      max-width: 600px;
+      max-width: 800px;
       margin: auto;
     }
 
@@ -116,21 +113,90 @@
       margin-top: 0.3rem;
     }
 
+    .calendar {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      margin: 20px 0;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
 
-    /* Mobile-Optimierungen */
+    .weekdays,
+    .days {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0;
+    }
+
+    .weekdays li,
+    .days li {
+      width: 14.28%;
+      list-style: none;
+      text-align: center;
+      padding: 10px 0;
+      box-sizing: border-box;
+    }
+
+    .weekdays {
+      background-color: #FFB6C1;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .days li {
+      color: #666;
+      margin: 2px 0;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+
+    .days li.active {
+      background: #FF69B4;
+      color: white !important;
+      font-weight: bold;
+    }
+
+    .nav-link.calendar-tab {
+      color: #FF69B4 !important;
+      font-weight: bold;
+      border: 2px solid #FF69B4;
+      margin: 0 5px;
+    }
+
+    .nav-link.calendar-tab.active {
+      background-color: #FF69B4 !important;
+      color: white !important;
+    }
+
+    .days li.past-day {
+      text-decoration: line-through;
+      opacity: 0.6;
+      color: #999 !important;
+      position: relative;
+    }
+
+    .days li.past-day::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: #999;
+      transform: translateY(-50%);
+    }
+
     @media (max-width: 576px) {
       .content {
         padding: 1rem;
-        border-radius: 10px;
         max-width: 100%;
       }
 
-      .hero h1 {
-        font-size: 1.75rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
+      .weekdays li,
+      .days li {
+        padding: 5px 0;
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -138,7 +204,6 @@
 
 <body>
   <div class="content-wrapper">
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container px-3">
         <a class="navbar-brand" href="../index.html">Für Sunny</a>
@@ -162,10 +227,183 @@
       </div>
     </nav>
 
-    <!-- Hauptinhalt / Hero Section -->
     <section class="hero">
       <div class="content text-center">
-        <h1 class="mb-4">Countdowns</h1>
+        <h1 class="mb-4">Countdowns & Kalender</h1>
+
+        <div class="calendar">
+          <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link calendar-tab active" data-bs-toggle="tab" href="#may">Mai 2025</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link calendar-tab" data-bs-toggle="tab" href="#june">Juni 2025</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link calendar-tab" data-bs-toggle="tab" href="#july">Juli 2025</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="may">
+              <ul class="weekdays">
+                <li>Mo</li>
+                <li>Di</li>
+                <li>Mi</li>
+                <li>Do</li>
+                <li>Fr</li>
+                <li>Sa</li>
+                <li>So</li>
+              </ul>
+              <ul class="days">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>24</li>
+                <li>25</li>
+                <li>26</li>
+                <li>27</li>
+                <li>28</li>
+                <li>29</li>
+                <li>30</li>
+                <li>31</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+
+            <div class="tab-pane fade" id="june">
+              <ul class="weekdays">
+                <li>Mo</li>
+                <li>Di</li>
+                <li>Mi</li>
+                <li>Do</li>
+                <li>Fr</li>
+                <li>Sa</li>
+                <li>So</li>
+              </ul>
+              <ul class="days">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>11</li>
+                <li class="active">12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+                <li>24</li>
+                <li>25</li>
+                <li>26</li>
+                <li>27</li>
+                <li>28</li>
+                <li>29</li>
+                <li>30</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+
+            <div class="tab-pane fade" id="july">
+              <ul class="weekdays">
+                <li>Mo</li>
+                <li>Di</li>
+                <li>Mi</li>
+                <li>Do</li>
+                <li>Fr</li>
+                <li>Sa</li>
+                <li>So</li>
+              </ul>
+              <ul class="days">
+                <li></li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+                <li>22</li>
+                <li class="active">23</li>
+                <li>24</li>
+                <li>25</li>
+                <li>26</li>
+                <li>27</li>
+                <li>28</li>
+                <li>29</li>
+                <li>30</li>
+                <li>31</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div class="countdown-box">
           <div class="event-title">Erstes Treffen (24.07.2025)</div>
           <div id="meeting-countdown" class="time">Lade Countdown...</div>
@@ -185,7 +423,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="py-4">
       <div class="container text-center px-3">
         <p class="mb-0">Mit ganz viel Liebe, dein Schwimmer</p>
@@ -193,10 +430,8 @@
     </footer>
   </div>
 
-  <!-- Bootstrap JS (via CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Berechnet die Zeitdifferenz zwischen startDate und endDate in vollen Monaten und verbleibenden Tagen.
     function calculateKnownTime(startDate, endDate) {
       let months = 0;
       let testDate = new Date(startDate);
@@ -212,47 +447,77 @@
       return { months, days };
     }
 
+    function markPastDays() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      document.querySelectorAll('.tab-pane').forEach(tab => {
+        const tabId = tab.id;
+        let month;
+        switch (tabId) {
+          case 'may': month = 4; break;
+          case 'june': month = 5; break;
+          case 'july': month = 6; break;
+          default: return;
+        }
+
+        const year = 2025;
+        tab.querySelectorAll('.days li').forEach(li => {
+          const dayText = li.textContent.trim();
+          if (!dayText) return;
+
+          const day = parseInt(dayText, 10);
+          if (isNaN(day)) return;
+
+          const cellDate = new Date(year, month, day);
+          cellDate.setHours(0, 0, 0, 0);
+
+          li.classList.toggle('past-day', cellDate < today);
+        });
+      });
+    }
+
     function updateCountdowns() {
       const now = new Date();
       const events = [
-        { id: "meeting", date: new Date("2025-07-24T00:00:00+01:00"), title: "Erstes Treffen (24.07.2025)" },
-        { id: "her-birthday", date: new Date("2025-06-12T00:00:00+01:00"), title: "Dein Geburtstag (12.06.2025)" },
-        { id: "my-birthday", date: new Date("2025-10-13T00:00:00+01:00"), title: "Mein Geburtstag (13.10.2025)" },
+        { id: "meeting", date: new Date("2025-07-24T00:00:00+01:00") },
+        { id: "her-birthday", date: new Date("2025-06-12T00:00:00+01:00") },
+        { id: "my-birthday", date: new Date("2025-10-13T00:00:00+01:00") },
       ];
 
       function getCountdownText(eventDate) {
         const diff = eventDate - now;
-        if (diff <= 0) {
-          return "Das Ereignis hat bereits stattgefunden!";
-        } else {
-          const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const weeks = Math.floor(totalDays / 7);
-          const days = totalDays % 7;
-          const weeksText = weeks === 1 ? "1 Woche" : `${weeks} Wochen`;
-          const daysText = days === 1 ? "1 Tag" : `${days} Tage`;
-          return { weeksText, daysText };
-        }
+        if (diff <= 0) return "✅ Ereignis erreicht!";
+
+        const totalDays = Math.floor(diff / 86400000);
+        const weeks = Math.floor(totalDays / 7);
+        const days = totalDays % 7;
+        return {
+          weeksText: weeks === 1 ? "1 Woche" : `${weeks} Wochen`,
+          daysText: days === 1 ? "1 Tag" : `${days} Tage`
+        };
       }
 
       events.forEach(event => {
         const countdown = getCountdownText(event.date);
+        const countdownElement = document.getElementById(`${event.id}-countdown`);
+
         if (typeof countdown === "string") {
-          document.getElementById(`${event.id}-countdown`).innerText = countdown;
-          document.getElementById(`${event.id}-small-time`).innerText = "";
+          countdownElement.innerText = countdown;
         } else {
-          document.getElementById(`${event.id}-countdown`).innerText = `Noch ${countdown.weeksText} und ${countdown.daysText}`;
+          countdownElement.innerHTML = `Noch ${countdown.weeksText}<br><small>und ${countdown.daysText}</small>`;
         }
       });
 
-      // Berechne die Zeit, die ihr euch kennt:
+      markPastDays();
+
       const firstMet = new Date("2024-08-28T00:00:00+01:00");
       const { months, days } = calculateKnownTime(firstMet, now);
-      const totalDiff = now - firstMet;
-      const totalMinutes = Math.floor(totalDiff / (1000 * 60));
-      const totalSeconds = Math.floor(totalDiff / 1000);
-      document.getElementById("known-time").innerText =
-        `Wir kennen uns jetzt seit ${months} Monaten und ${days} Tagen.\n` +
-        `Das sind insgesamt ${totalMinutes.toLocaleString('de-DE')} Minuten und ${totalSeconds.toLocaleString('de-DE')} Sekunden.`;
+      document.getElementById("known-time").innerHTML = `
+        Wir kennen uns jetzt schon seit ${months} Monaten und ${days} Tagen.<br>
+        Das sind ${Math.floor((now - firstMet) / 86400000)} wunderschöne Tage
+        mit meiner kleinen Prinzessin
+      `;
     }
 
     setInterval(updateCountdowns, 1000);
